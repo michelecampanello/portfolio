@@ -1,61 +1,44 @@
 ---
-import Icon from './Icon.astro';
 import { profile } from '../data/cv';
 
-const socials = [
-  { href: profile.github, label: 'GitHub', icon: 'github' },
-  { href: profile.linkedin, label: 'LinkedIn', icon: 'linkedin' },
-].filter((s) => s.href);
+const links = [
+  profile.phone && { href: `tel:${profile.phone.replace(/\s/g, '')}`, label: profile.phone },
+  profile.github && { href: profile.github, label: 'GitHub ↗', external: true },
+  profile.linkedin && { href: profile.linkedin, label: 'LinkedIn ↗', external: true },
+].filter(Boolean) as { href: string; label: string; external?: boolean }[];
 ---
 
-<section id="contatti" class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-  <div class="reveal relative overflow-hidden rounded-[1.25rem] border border-line bg-surface px-6 py-14 text-center sm:px-12 sm:py-20">
-    <div
-      class="pointer-events-none absolute inset-0 -z-0 opacity-20"
-      style="background: radial-gradient(600px circle at 50% 0%, var(--accent), transparent 60%);"
-    ></div>
-    <div class="relative">
-      <p class="font-mono text-sm text-accent">Contatti</p>
-      <h2 class="mx-auto mt-3 max-w-3xl font-display text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
-        Costruiamo qualcosa <span class="text-gradient">insieme</span>.
-      </h2>
-      <p class="mx-auto mt-6 max-w-xl text-lg text-muted text-pretty">
-        Sto cercando nuove opportunità come sviluppatore. Scrivimi per una collaborazione, un colloquio o anche solo per due chiacchiere sul codice.
+<section id="contatti" class="bg-ink text-paper">
+  <div class="mx-auto max-w-7xl px-4 py-24 sm:px-8 sm:py-36">
+    <p class="reveal label flex gap-3">
+      <span class="text-signal">Fine lato B</span><span class="opacity-60">Contatti</span>
+    </p>
+
+    <h2 class="reveal mt-8 font-serif text-[clamp(3.5rem,11vw,10rem)] leading-[0.9] font-medium tracking-[-0.03em]">
+      Parliamone<span class="text-signal">.</span>
+    </h2>
+
+    <div class="reveal mt-12 grid gap-10 md:grid-cols-12">
+      <p class="text-lg text-pretty opacity-75 md:col-span-5">
+        Hai un team che cerca uno sviluppatore, un progetto da far partire o una domanda sul mio percorso? Rispondo a ogni email, di solito in giornata.
       </p>
 
-      <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+      <div class="md:col-span-7 md:text-right">
         <a
           href={`mailto:${profile.email}`}
-          class="group inline-flex max-w-full items-center gap-2 rounded-full bg-fg px-6 py-3.5 font-medium text-bg transition-transform hover:scale-[1.03]"
+          class="ink-link font-serif text-[clamp(1.25rem,3.6vw,2.75rem)] break-all italic hover:text-signal sm:break-normal"
         >
-          <Icon name="mail" class="size-5 shrink-0" />
-          <span class="truncate">{profile.email}</span>
+          {profile.email}
         </a>
-        <button
-          id="copy-email"
-          type="button"
-          data-email={profile.email}
-          class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-5 py-3.5 text-sm font-medium transition-colors hover:border-accent"
-        >
-          <Icon name="copy" class="size-4" />
-          <span data-label>Copia email</span>
-        </button>
-      </div>
-
-      {(profile.phone || socials.length > 0) && (
-        <div class="mt-8 flex flex-wrap items-center justify-center gap-5 text-muted">
-          {profile.phone && (
-            <a href={`tel:${profile.phone.replace(/\s/g, '')}`} class="inline-flex items-center gap-2 hover:text-fg">
-              <Icon name="call" class="size-4" /> {profile.phone}
-            </a>
-          )}
-          {socials.map((s) => (
-            <a href={s.href} target="_blank" rel="noopener" class="inline-flex items-center gap-2 hover:text-fg">
-              <Icon name={s.icon} class="size-4" /> {s.label}
-            </a>
+        <div class="mt-6 flex flex-wrap gap-x-6 gap-y-3 md:justify-end">
+          <button id="copy-email" type="button" data-email={profile.email} class="label ink-link">
+            Copia indirizzo
+          </button>
+          {links.map((l) => (
+            <a href={l.href} class="label ink-link" target={l.external ? '_blank' : undefined} rel={l.external ? 'noopener' : undefined}>{l.label}</a>
           ))}
         </div>
-      )}
+      </div>
     </div>
   </div>
 </section>
@@ -63,13 +46,12 @@ const socials = [
 <script>
   const btn = document.getElementById('copy-email') as HTMLButtonElement | null;
   btn?.addEventListener('click', async () => {
-    const label = btn.querySelector('[data-label]')!;
     try {
       await navigator.clipboard.writeText(btn.dataset.email!);
-      label.textContent = 'Copiata!';
+      btn.textContent = 'Copiato ✓';
     } catch {
-      label.textContent = btn.dataset.email!;
+      btn.textContent = btn.dataset.email!;
     }
-    setTimeout(() => (label.textContent = 'Copia email'), 2000);
+    setTimeout(() => (btn.textContent = 'Copia indirizzo'), 2000);
   });
 </script>

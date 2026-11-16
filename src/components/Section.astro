@@ -1,19 +1,22 @@
 ---
+// Intestazione di sezione in stile "lato del disco": codice traccia, titolo, nota a margine.
 interface Props {
   id: string;
-  index: string;
-  eyebrow: string;
+  side: string;
+  label: string;
   title: string;
+  aside?: string;
 }
-const { id, index, eyebrow, title } = Astro.props;
+const { id, side, label, title, aside } = Astro.props;
 ---
 
-<section id={id} class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-  <div class="reveal mb-12 flex flex-col gap-3">
-    <p class="font-mono text-sm text-accent">
-      <span class="text-muted">{index} /</span> {eyebrow}
+<section id={id} class="mx-auto max-w-7xl px-4 py-20 sm:px-8 sm:py-32">
+  <header class="reveal mb-14 grid gap-6 border-t border-ink pt-5 md:grid-cols-12 sm:mb-20">
+    <p class="label flex gap-3 md:col-span-3">
+      <span class="text-signal">{side}</span><span class="text-soft">{label}</span>
     </p>
-    <h2 class="font-display text-3xl font-semibold tracking-tight text-balance sm:text-5xl">{title}</h2>
-  </div>
+    <h2 class="font-serif text-4xl leading-[1.05] font-medium tracking-tight text-balance sm:text-6xl md:col-span-6" set:html={title} />
+    {aside && <p class="max-w-xs text-soft text-pretty md:col-span-3 md:justify-self-end md:text-right">{aside}</p>}
+  </header>
   <slot />
 </section>

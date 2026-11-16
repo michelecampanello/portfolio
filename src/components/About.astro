@@ -1,27 +1,56 @@
 ---
 import Section from './Section.astro';
-import { profile, highlights } from '../data/cv';
+import { Image } from 'astro:assets';
+import { profile } from '../data/cv';
+import photo from '../assets/michele.png';
 ---
 
-<Section id="chi-sono" index="01" eyebrow="Chi sono" title="Codice pulito, curiosità costante.">
-  <div class="grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
-    <div class="reveal space-y-5 text-lg leading-relaxed text-muted text-pretty">
-      {profile.about.map((p) => <p>{p}</p>)}
-      <div class="flex flex-wrap items-center gap-2 pt-2">
-        <span class="text-sm text-fg">Fuori dal codice:</span>
-        {profile.interests.map((i) => (
-          <span class="rounded-full border border-line px-3 py-1 text-sm">{i}</span>
-        ))}
-      </div>
+<Section
+  id="chi-sono"
+  side="A1"
+  label="Chi sono"
+  title="Prima il diploma sanitario, <em class='serif-soft text-signal'>poi</em> il codice."
+  aside="Una storia breve, ma scritta con cura."
+>
+  <div class="grid gap-14 md:grid-cols-12">
+    <div class="flex flex-col gap-12 md:col-span-5">
+      <figure class="reveal group w-full max-w-xs sm:max-w-sm">
+        <div class="relative -rotate-2 border border-rule bg-paper-2 p-3 pb-12 shadow-[0_20px_40px_-24px_rgb(0_0_0/0.45)] transition-transform duration-500 group-hover:rotate-0">
+          <span class="absolute -top-3 left-1/2 h-6 w-24 -translate-x-1/2 rotate-3 bg-signal/80" aria-hidden="true"></span>
+          <Image
+            src={photo}
+            alt={`Ritratto di ${profile.name}`}
+            widths={[320, 500]}
+            sizes="(min-width: 768px) 24rem, 90vw"
+            class="aspect-square w-full object-cover grayscale-[35%] sepia-[15%] transition-[filter] duration-500 group-hover:filter-none"
+            loading="lazy"
+          />
+          <figcaption class="label absolute right-3 bottom-4 left-3 flex justify-between text-soft">
+            <span>Fig. 01</span><span>{profile.firstName}, {profile.city}</span>
+          </figcaption>
+        </div>
+      </figure>
+
+      <blockquote class="reveal">
+        <p class="font-serif text-3xl leading-tight italic text-balance sm:text-4xl">
+          <span class="text-signal">“</span>{profile.quote}<span class="text-signal">”</span>
+        </p>
+      </blockquote>
     </div>
 
-    <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-      {highlights.map((h) => (
-        <div class="card reveal flex items-baseline gap-4 p-6">
-          <span class="font-display text-4xl font-semibold text-gradient">{h.value}</span>
-          <span class="text-muted">{h.label}</span>
-        </div>
+    <div class="space-y-6 text-lg leading-relaxed text-pretty md:col-span-6 md:col-start-7">
+      {profile.story.map((p, i) => (
+        <p class:list={['reveal', i === 0 && 'first-letter:float-left first-letter:mr-3 first-letter:font-serif first-letter:text-7xl first-letter:leading-[0.8] first-letter:text-signal']}>{p}</p>
       ))}
+
+      <dl class="reveal mt-10 grid grid-cols-1 border-t border-rule sm:grid-cols-2">
+        {profile.facts.map((f) => (
+          <div class="border-b border-rule py-4 sm:odd:pr-6 sm:even:border-l sm:even:pl-6">
+            <dt class="label text-soft">{f.label}</dt>
+            <dd class="mt-1 font-serif text-xl">{f.value}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
   </div>
 </Section>

@@ -22,10 +22,11 @@ const year = new Date().getFullYear();
     <Education />
     <Contact />
   </main>
-  <footer class="border-t border-line">
-    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 py-8 text-sm text-muted sm:flex-row sm:px-6">
-      <p>© {year} {profile.name}</p>
-      <p class="font-mono">Realizzato con Astro &amp; Tailwind</p>
+  <footer class="border-t border-paper/15 bg-ink text-paper">
+    <div class="mx-auto grid max-w-7xl gap-6 px-4 py-10 sm:grid-cols-3 sm:px-8">
+      <p class="label opacity-60">Titoli di coda</p>
+      <p class="text-sm opacity-75">Progettato e scritto da {profile.name}.<br />Costruito con Astro e Tailwind CSS.</p>
+      <p class="label opacity-60 sm:text-right">© {year} · {profile.city}</p>
     </div>
   </footer>
 </Layout>

@@ -1,76 +1,90 @@
 ---
-import Icon from './Icon.astro';
 import { profile, skills } from '../data/cv';
 
 const stack = skills.flatMap((s) => s.items).filter((i) => !i.includes('Office'));
+const ring = `${profile.role} · ${profile.city} · Est. 2022 · `;
 ---
 
-<section id="top" class="relative isolate overflow-hidden">
-  <div class="bg-grid absolute inset-0 -z-10"></div>
-  <div
-    class="absolute -top-40 left-1/2 -z-10 h-[520px] w-[820px] max-w-[160vw] -translate-x-1/2 rounded-full opacity-30 blur-3xl dark:opacity-25"
-    style="background: radial-gradient(closest-side, var(--accent), transparent), radial-gradient(closest-side, var(--accent-2), transparent) 60% 40% / 70% 70% no-repeat;"
-  ></div>
+<section id="top" class="relative overflow-hidden">
+  <div class="mx-auto flex min-h-[100svh] max-w-7xl flex-col px-4 pt-24 pb-10 sm:px-8 sm:pt-28">
+    <div class="reveal flex flex-wrap items-center justify-between gap-4 border-b border-rule pb-4">
+      <p class="label flex items-center gap-2.5">
+        <span class="relative flex size-2">
+          <span class="absolute inline-flex size-full animate-ping rounded-full bg-signal opacity-70 motion-reduce:animate-none"></span>
+          <span class="relative inline-flex size-2 rounded-full bg-signal"></span>
+        </span>
+        {profile.status}
+      </p>
+      <p class="label text-soft">Portfolio · Vol. 01</p>
+    </div>
 
-  <div class="mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-center px-4 pt-28 pb-16 sm:px-6">
-    <p class="reveal mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-line bg-surface/70 px-3.5 py-1.5 text-sm text-muted backdrop-blur">
-      <span class="relative flex size-2">
-        <span class="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60"></span>
-        <span class="relative inline-flex size-2 rounded-full bg-accent"></span>
-      </span>
-      Disponibile per nuove opportunità
-    </p>
+    <div class="relative flex flex-1 flex-col justify-center py-12">
+      <h1 class="reveal font-serif leading-[0.86] font-medium tracking-[-0.035em]">
+        <span class="block text-[clamp(4rem,15vw,13.5rem)]">{profile.firstName}</span>
+        <span class="serif-soft block pl-[8vw] text-[clamp(4rem,15vw,13.5rem)] italic">
+          {profile.lastName}<span class="text-signal not-italic">.</span>
+        </span>
+      </h1>
 
-    <h1 class="reveal font-display text-5xl leading-[1.02] font-semibold tracking-tight text-balance sm:text-7xl lg:text-8xl">
-      Ciao, sono {profile.firstName}.<br />
-      <span class="text-gradient">{profile.role}.</span>
-    </h1>
+      <!-- Etichetta di vinile che gira -->
+      <div class="vinyl pointer-events-none absolute top-6 right-0 hidden size-44 md:block lg:size-56" aria-hidden="true">
+        <svg viewBox="0 0 200 200" class="size-full">
+          <defs>
+            <path id="ring" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
+          </defs>
+          <circle cx="100" cy="100" r="98" fill="var(--ink)" />
+          <circle cx="100" cy="100" r="62" fill="none" stroke="var(--soft)" stroke-opacity=".35" />
+          <circle cx="100" cy="100" r="52" fill="none" stroke="var(--soft)" stroke-opacity=".25" />
+          <circle cx="100" cy="100" r="34" fill="var(--signal)" />
+          <circle cx="100" cy="100" r="4" fill="var(--paper)" />
+          <text font-family="JetBrains Mono Variable, monospace" font-size="11" letter-spacing="2.4" fill="var(--paper)">
+            <textPath href="#ring">{ring.toUpperCase()}</textPath>
+          </text>
+        </svg>
+      </div>
+    </div>
 
-    <p class="reveal mt-8 max-w-2xl text-lg leading-relaxed text-muted text-pretty sm:text-xl">
-      {profile.tagline}
-    </p>
-
-    <div class="reveal mt-10 flex flex-wrap items-center gap-3">
-      <a
-        href="#contatti"
-        class="group inline-flex items-center gap-2 rounded-full bg-fg px-6 py-3 font-medium text-bg transition-transform hover:scale-[1.03]"
-      >
-        Contattami
-        <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-0.5" />
-      </a>
-      <a
-        href="#competenze"
-        class="inline-flex items-center gap-2 rounded-full border border-line bg-surface/60 px-6 py-3 font-medium backdrop-blur transition-colors hover:border-accent"
-      >
-        Le mie competenze
-      </a>
-      <span class="ml-1 inline-flex items-center gap-1.5 text-sm text-muted">
-        <Icon name="pin" class="size-4" /> {profile.location}
-      </span>
+    <div class="reveal grid gap-8 border-t border-rule pt-6 md:grid-cols-12">
+      <p class="font-serif text-2xl leading-snug text-pretty sm:text-3xl md:col-span-7">
+        <span class="text-signal italic">{profile.role}</span> a {profile.city}. {profile.intro}
+      </p>
+      <div class="flex flex-wrap items-end gap-3 md:col-span-5 md:justify-end">
+        <a href="#contatti" class="group inline-flex items-center gap-3 rounded-full bg-ink py-3 pr-3 pl-6 text-paper transition-colors hover:bg-signal">
+          Scrivimi
+          <span class="grid size-8 place-items-center rounded-full bg-paper text-ink transition-transform group-hover:rotate-[-45deg]">→</span>
+        </a>
+        <a href="#chi-sono" class="label ink-link py-1">Leggi la storia ↓</a>
+      </div>
     </div>
   </div>
 
-  <!-- Nastro scorrevole con lo stack tecnologico -->
-  <div class="border-y border-line bg-surface/50 py-4 backdrop-blur" aria-label="Tecnologie">
-    <div class="marquee flex w-max gap-10 font-mono text-sm text-muted">
-      {[...stack, ...stack].map((t, i) => (
-        <span class="flex items-center gap-10" aria-hidden={i >= stack.length ? 'true' : undefined}>
-          {t}<span class="text-accent">◆</span>
-        </span>
+  <!-- Nastro con lo stack -->
+  <div class="-rotate-1 border-y border-ink bg-signal py-3 text-[#161412]" aria-label="Tecnologie che uso">
+    <div class="marquee flex w-max">
+      {[0, 1].map((copy) => (
+        <ul class="flex shrink-0 items-center" aria-hidden={copy ? 'true' : undefined}>
+          {stack.map((t) => (
+            <li class="flex items-center font-serif text-3xl italic sm:text-4xl">
+              <span class="px-6">{t}</span><span class="not-italic">✳</span>
+            </li>
+          ))}
+        </ul>
       ))}
     </div>
   </div>
 </section>
 
 <style>
-  .marquee {
-    animation: marquee 40s linear infinite;
-  }
-  @keyframes marquee {
-    to { transform: translateX(-50%); }
-  }
+  .vinyl svg { animation: spin 18s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .marquee { animation: marquee 45s linear infinite; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
   @media (prefers-reduced-motion: reduce) {
-    .marquee { animation: none; flex-wrap: wrap; width: auto; justify-content: center; padding-inline: 1rem; row-gap: 0.5rem; }
+    .vinyl svg, .marquee { animation: none; }
+    .marquee { width: auto; flex-wrap: wrap; justify-content: center; }
+    .marquee > ul { flex-wrap: wrap; justify-content: center; }
     .marquee > [aria-hidden] { display: none; }
   }
 </style>

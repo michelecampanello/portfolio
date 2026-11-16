@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = `${profile.name} · ${profile.role}`,
-  description = profile.tagline,
+  title = `${profile.name} — ${profile.role} a ${profile.city}`,
+  description = profile.intro,
 } = Astro.props;
 ---
 
@@ -25,14 +25,16 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#0b0c10" />
+    <meta name="theme-color" content="#f1ece2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)" />
     <script is:inline>
       (() => {
         let theme;
         try { theme = localStorage.getItem('theme'); } catch {}
-        if (!theme) theme = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-        document.documentElement.classList.toggle('dark', theme === 'dark');
-        document.documentElement.classList.add('js');
+        if (!theme) theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const root = document.documentElement;
+        root.classList.toggle('dark', theme === 'dark');
+        root.classList.add('js');
       })();
     </script>
   </head>
@@ -48,7 +50,7 @@ const {
             }
           }
         },
-        { threshold: 0.12 },
+        { threshold: 0.1, rootMargin: '0px 0px -5% 0px' },
       );
       document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
     </script>
