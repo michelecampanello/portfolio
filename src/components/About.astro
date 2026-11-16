@@ -1,0 +1,27 @@
+---
+import Section from './Section.astro';
+import { profile, highlights } from '../data/cv';
+---
+
+<Section id="chi-sono" index="01" eyebrow="Chi sono" title="Codice pulito, curiosità costante.">
+  <div class="grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
+    <div class="reveal space-y-5 text-lg leading-relaxed text-muted text-pretty">
+      {profile.about.map((p) => <p>{p}</p>)}
+      <div class="flex flex-wrap items-center gap-2 pt-2">
+        <span class="text-sm text-fg">Fuori dal codice:</span>
+        {profile.interests.map((i) => (
+          <span class="rounded-full border border-line px-3 py-1 text-sm">{i}</span>
+        ))}
+      </div>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+      {highlights.map((h) => (
+        <div class="card reveal flex items-baseline gap-4 p-6">
+          <span class="font-display text-4xl font-semibold text-gradient">{h.value}</span>
+          <span class="text-muted">{h.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</Section>

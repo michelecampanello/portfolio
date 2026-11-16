@@ -1,0 +1,76 @@
+---
+import Icon from './Icon.astro';
+import { profile, skills } from '../data/cv';
+
+const stack = skills.flatMap((s) => s.items).filter((i) => !i.includes('Office'));
+---
+
+<section id="top" class="relative isolate overflow-hidden">
+  <div class="bg-grid absolute inset-0 -z-10"></div>
+  <div
+    class="absolute -top-40 left-1/2 -z-10 h-[520px] w-[820px] max-w-[160vw] -translate-x-1/2 rounded-full opacity-30 blur-3xl dark:opacity-25"
+    style="background: radial-gradient(closest-side, var(--accent), transparent), radial-gradient(closest-side, var(--accent-2), transparent) 60% 40% / 70% 70% no-repeat;"
+  ></div>
+
+  <div class="mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-center px-4 pt-28 pb-16 sm:px-6">
+    <p class="reveal mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-line bg-surface/70 px-3.5 py-1.5 text-sm text-muted backdrop-blur">
+      <span class="relative flex size-2">
+        <span class="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60"></span>
+        <span class="relative inline-flex size-2 rounded-full bg-accent"></span>
+      </span>
+      Disponibile per nuove opportunità
+    </p>
+
+    <h1 class="reveal font-display text-5xl leading-[1.02] font-semibold tracking-tight text-balance sm:text-7xl lg:text-8xl">
+      Ciao, sono {profile.firstName}.<br />
+      <span class="text-gradient">{profile.role}.</span>
+    </h1>
+
+    <p class="reveal mt-8 max-w-2xl text-lg leading-relaxed text-muted text-pretty sm:text-xl">
+      {profile.tagline}
+    </p>
+
+    <div class="reveal mt-10 flex flex-wrap items-center gap-3">
+      <a
+        href="#contatti"
+        class="group inline-flex items-center gap-2 rounded-full bg-fg px-6 py-3 font-medium text-bg transition-transform hover:scale-[1.03]"
+      >
+        Contattami
+        <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-0.5" />
+      </a>
+      <a
+        href="#competenze"
+        class="inline-flex items-center gap-2 rounded-full border border-line bg-surface/60 px-6 py-3 font-medium backdrop-blur transition-colors hover:border-accent"
+      >
+        Le mie competenze
+      </a>
+      <span class="ml-1 inline-flex items-center gap-1.5 text-sm text-muted">
+        <Icon name="pin" class="size-4" /> {profile.location}
+      </span>
+    </div>
+  </div>
+
+  <!-- Nastro scorrevole con lo stack tecnologico -->
+  <div class="border-y border-line bg-surface/50 py-4 backdrop-blur" aria-label="Tecnologie">
+    <div class="marquee flex w-max gap-10 font-mono text-sm text-muted">
+      {[...stack, ...stack].map((t, i) => (
+        <span class="flex items-center gap-10" aria-hidden={i >= stack.length ? 'true' : undefined}>
+          {t}<span class="text-accent">◆</span>
+        </span>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee {
+    animation: marquee 40s linear infinite;
+  }
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { animation: none; flex-wrap: wrap; width: auto; justify-content: center; padding-inline: 1rem; row-gap: 0.5rem; }
+    .marquee > [aria-hidden] { display: none; }
+  }
+</style>

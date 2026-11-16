@@ -1,0 +1,25 @@
+---
+import Section from './Section.astro';
+import Icon from './Icon.astro';
+import { projects } from '../data/cv';
+---
+
+{projects.length > 0 && (
+  <Section id="progetti" index="03" eyebrow="Progetti" title="Alcune cose che ho costruito.">
+    <div class="grid gap-4 md:grid-cols-2">
+      {projects.map((p) => (
+        <article class="card reveal flex flex-col gap-4 p-7">
+          <h3 class="font-display text-2xl font-semibold">{p.title}</h3>
+          <p class="text-muted text-pretty">{p.description}</p>
+          <ul class="flex flex-wrap gap-2">
+            {p.stack.map((t) => <li class="font-mono text-xs text-accent">#{t}</li>)}
+          </ul>
+          <div class="mt-auto flex gap-4 pt-2 text-sm font-medium">
+            {p.url && <a href={p.url} target="_blank" rel="noopener" class="inline-flex items-center gap-1 hover:text-accent">Demo <Icon name="external" class="size-4" /></a>}
+            {p.repo && <a href={p.repo} target="_blank" rel="noopener" class="inline-flex items-center gap-1 hover:text-accent">Codice <Icon name="github" class="size-4" /></a>}
+          </div>
+        </article>
+      ))}
+    </div>
+  </Section>
+)}
