@@ -1,19 +1,14 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import Skills from '../components/Skills.astro';
-import Projects from '../components/Projects.astro';
-import Education from '../components/Education.astro';
-import Contact from '../components/Contact.astro';
-import { profile } from '../data/cv';
-
-const year = new Date().getFullYear();
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import Skills from "../components/Skills.astro";
+import Projects from "../components/Projects.astro";
+import Education from "../components/Education.astro";
+import Contact from "../components/Contact.astro";
 ---
 
 <Layout>
-  <Nav />
   <main>
     <Hero />
     <About />
@@ -22,11 +17,4 @@ const year = new Date().getFullYear();
     <Education />
     <Contact />
   </main>
-  <footer class="border-t border-paper/15 bg-ink text-paper">
-    <div class="mx-auto grid max-w-7xl gap-6 px-4 py-10 sm:grid-cols-3 sm:px-8">
-      <p class="label opacity-60">Titoli di coda</p>
-      <p class="text-sm opacity-75">Progettato e scritto da {profile.name}.<br />Costruito con Astro e Tailwind CSS.</p>
-      <p class="label opacity-60 sm:text-right">© {year} · {profile.city}</p>
-    </div>
-  </footer>
 </Layout>

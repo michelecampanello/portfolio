@@ -10,11 +10,11 @@ export const profile = {
   // Lascia vuoto per non mostrarlo pubblicamente.
   phone: "",
   // Aggiungi i tuoi profili (es. 'https://github.com/...'): i link vuoti non vengono mostrati.
-  github: "",
-  linkedin: "",
+  github: "https://github.com/michelecampanello",
+  linkedin: "https://www.linkedin.com/in/michele-campanello-82365325a/",
   status: "Disponibile · cerco un team con cui crescere",
   intro:
-    "Interfacce in React e Next.js, API in Node.js e Spring Boot, app in Flutter. E una fissazione sana per il codice che si legge bene anche sei mesi dopo.",
+    "Interfacce in React e Next.js, API in Node.js e Spring Boot, app in Flutter.",
   quote: "Scrivo codice pensando a chi dovrà leggerlo dopo di me.",
   story: [
     "Ho un diploma tecnico a indirizzo sanitario. Nel 2022 ho cambiato strada con il corso Full Stack Developer di Aulab, e da allora non ho più smesso di studiare: analisi dei dati con Boolean, conversation e prompt design, la certificazione PEKIT Expert.",
@@ -81,13 +81,13 @@ export const education = [
     title: "Full Stack Developer",
     note: "Il bootcamp dove è cominciato tutto",
     org: "Aulab",
-    year: "2022–23",
+    year: "2022-23",
   },
   {
     title: "Diploma tecnico",
     note: "Indirizzo sanitario, prima del cambio di rotta",
     org: "IISS Elena di Savoia, Bari",
-    year: "2017–21",
+    year: "2017-21",
   },
 ];
 
