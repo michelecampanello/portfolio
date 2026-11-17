@@ -1,6 +1,9 @@
 ---
 import Section from './Section.astro';
 import { projects } from '../data/cv';
+import { caseStudies } from '../data/case-studies';
+
+const hasStudy = (slug?: string) => !!slug && caseStudies.some((s) => s.slug === slug);
 ---
 
 {projects.length > 0 && (
@@ -11,21 +14,45 @@ import { projects } from '../data/cv';
     title="Cose che ho <em class='serif-soft text-signal'>costruito</em>."
   >
     <div class="grid gap-px overflow-hidden border border-rule bg-rule md:grid-cols-2">
-      {projects.map((p, i) => (
-        <article class="reveal flex flex-col gap-4 bg-paper p-7 sm:p-10">
-          <p class="label flex justify-between text-soft">
-            <span class="text-signal">{String(i + 1).padStart(2, '0')}</span>
-            {p.year && <span>{p.year}</span>}
-          </p>
-          <h3 class="font-serif text-3xl font-medium">{p.title}</h3>
-          <p class="text-soft text-pretty">{p.description}</p>
-          <p class="font-mono text-xs">{p.stack.join(' / ')}</p>
-          <div class="mt-auto flex gap-6 pt-4">
-            {p.url && <a href={p.url} target="_blank" rel="noopener" class="label ink-link">Guarda online ↗</a>}
-            {p.repo && <a href={p.repo} target="_blank" rel="noopener" class="label ink-link">Codice ↗</a>}
-          </div>
-        </article>
-      ))}
+      {projects.map((p, i) => {
+        const study = hasStudy(p.slug) ? `/progetti/${p.slug}` : null;
+        return (
+          <article class:list={['reveal group relative flex flex-col gap-4 bg-paper p-7 sm:p-10', study && 'transition-colors hover:bg-paper-2']}>
+            <p class="label flex justify-between text-soft">
+              <span class="text-signal">{String(i + 1).padStart(2, '0')}</span>
+              {p.year && <span>{p.year}</span>}
+            </p>
+            <h3 class="font-serif text-3xl font-medium">
+              {study ? (
+                // Il link si allarga su tutta la card con ::after; "Codice" gli sta sopra con z-10.
+                <a
+                  href={study}
+                  class="after:absolute after:inset-0 after:outline-signal focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:-outline-offset-4"
+                >
+                  {p.title}<span class="sr-only">: leggi il case study</span>
+                </a>
+              ) : p.title}
+            </h3>
+            <p class="text-soft text-pretty">{p.description}</p>
+            <p class="font-mono text-xs">{p.stack.join(' / ')}</p>
+            <div class="mt-auto flex flex-wrap items-baseline justify-between gap-6 pt-4">
+              {study ? (
+                <>
+                  <span class="label text-signal" aria-hidden="true">
+                    Leggi il case study <span class="inline-block transition-transform group-hover:translate-x-1">→</span>
+                  </span>
+                  {p.repo && <a href={p.repo} target="_blank" rel="noopener" class="label ink-link relative z-10 text-soft hover:text-ink">Codice ↗</a>}
+                </>
+              ) : (
+                <div class="flex gap-6">
+                  {p.url && <a href={p.url} target="_blank" rel="noopener" class="label ink-link">Guarda online ↗</a>}
+                  {p.repo && <a href={p.repo} target="_blank" rel="noopener" class="label ink-link">Codice ↗</a>}
+                </div>
+              )}
+            </div>
+          </article>
+        );
+      })}
     </div>
   </Section>
 )}

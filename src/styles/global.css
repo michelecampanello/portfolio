@@ -42,6 +42,24 @@
   color-scheme: dark;
 }
 
+/* Blocco "in negativo": sempre scuro, anche dentro il tema chiaro */
+.negative {
+  --paper: #141210;
+  --paper-2: #1d1a17;
+  --ink: #ede6d8;
+  --soft: #a39b8d;
+  --rule: #34302a;
+  --signal: #ff6a3d;
+  background: var(--paper);
+  color: var(--ink);
+  color-scheme: dark;
+}
+.dark .negative {
+  --paper: #1d1a17;
+  --paper-2: #26221e;
+  --rule: #3d3832;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 4.5rem;

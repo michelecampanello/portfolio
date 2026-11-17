@@ -1,0 +1,166 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/Section.astro";
+import LiveDemo from "../../components/LiveDemo.astro";
+import { profile, projects } from "../../data/cv";
+import { caseStudies } from "../../data/case-studies";
+
+export function getStaticPaths() {
+  return caseStudies.flatMap((study) => {
+    const project = projects.find((p) => p.slug === study.slug);
+    return project ? [{ params: { slug: study.slug }, props: { study, project } }] : [];
+  });
+}
+
+const { study, project } = Astro.props;
+const repoBase = project.repo ? `${project.repo}/commit/` : "";
+---
+
+<Layout
+  title={`${project.title} — case study di ${profile.name}`}
+  description={study.tagline}
+>
+  <!-- Copertina -->
+  <section id="top" class="mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-8 sm:pt-40 sm:pb-24">
+    <a href="/#progetti" class="label ink-link py-1 text-soft">← Tutti i progetti</a>
+
+    <p class="label mt-12 flex flex-wrap gap-x-6 gap-y-2">
+      <span class="text-signal">{study.kicker}</span>
+      <span class="text-soft">{project.year}</span>
+      <span class="text-soft">{study.role}</span>
+    </p>
+
+    <h1 class="mt-6 font-serif text-[clamp(4rem,16vw,13rem)] leading-[0.85] font-medium tracking-tight">
+      {project.title}<span class="text-signal">.</span>
+    </h1>
+
+    <div class="mt-10 grid gap-8 border-t border-ink pt-8 md:grid-cols-12">
+      <p class="font-serif text-2xl leading-snug text-pretty sm:text-3xl md:col-span-7">
+        <em class="serif-soft">{study.tagline}</em>
+      </p>
+      <div class="flex flex-col gap-6 md:col-span-4 md:col-start-9">
+        <p class="font-mono text-xs">{project.stack.join(" / ")}</p>
+        <div class="flex flex-wrap gap-6">
+          {project.url && <a href={project.url} target="_blank" rel="noopener" class="label ink-link py-1">Guarda online ↗</a>}
+          {project.repo && <a href={project.repo} target="_blank" rel="noopener" class="label ink-link py-1">Codice ↗</a>}
+        </div>
+        <p class="text-sm text-soft text-pretty">{study.context}</p>
+      </div>
+    </div>
+
+    <dl class="mt-16 grid grid-cols-2 gap-px overflow-hidden border border-rule bg-rule md:grid-cols-4">
+      {study.stats.map((s) => (
+        <div class="flex flex-col-reverse gap-2 bg-paper p-6 sm:p-8">
+          <dt class="label text-soft">{s.label}</dt>
+          <dd class="font-serif text-5xl font-medium sm:text-6xl">{s.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <Section id="obiettivo" side="01" label="L'obiettivo" title="Un negozio con i <em class='serif-soft text-signal'>problemi veri</em>.">
+    <div class="grid gap-6 md:grid-cols-12">
+      <div class="reveal flex flex-col gap-6 text-lg leading-relaxed text-pretty md:col-span-7 md:col-start-4">
+        {study.goal.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </Section>
+
+  {project.url && (
+    <Section
+      id="dal-vivo"
+      side="02"
+      label="Dal vivo"
+      title="Non fidarti delle parole: <em class='serif-soft text-signal'>provalo</em>."
+      aside="È il sito vero, non uno screenshot. Gli ordini non partono e nessun pagamento è reale."
+    >
+      <LiveDemo url={project.url} title={project.title} />
+    </Section>
+  )}
+
+  <Section id="architettura" side="03" label="Architettura" title="Quattro strati, <em class='serif-soft text-signal'>un dominio</em>.">
+    <ol class="border-t border-rule">
+      {study.architecture.map((a, i) => (
+        <li class="reveal grid gap-3 border-b border-rule py-7 md:grid-cols-12 md:items-baseline">
+          <span class="label text-signal md:col-span-1">{String(i + 1).padStart(2, "0")}</span>
+          <h3 class="font-serif text-3xl font-medium md:col-span-3">{a.layer}</h3>
+          <p class="font-mono text-xs md:col-span-3">{a.tech}</p>
+          <p class="text-soft text-pretty md:col-span-5">{a.note}</p>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <Section
+    id="scelte"
+    side="04"
+    label="Le scelte"
+    title="Dettagli che nessuno nota <em class='serif-soft text-signal'>finché non mancano</em>."
+  >
+    <div class="grid gap-px overflow-hidden border border-rule bg-rule md:grid-cols-2 lg:grid-cols-3">
+      {study.decisions.map((d, i) => (
+        <article class="reveal flex flex-col gap-4 bg-paper p-7 sm:p-9">
+          <span class="label text-signal">{String(i + 1).padStart(2, "0")}</span>
+          <h3 class="font-serif text-2xl leading-tight font-medium text-balance">{d.title}</h3>
+          <p class="text-soft text-pretty">{d.body}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <!-- La difficoltà: blocco in negativo per farlo risaltare -->
+  <div class="negative">
+    <Section id="difficolta" side="05" label="La difficoltà" title={study.challenge.title + "<span class='text-signal'>.</span>"}>
+      <div class="grid gap-12 md:grid-cols-12">
+        <p class="reveal text-lg leading-relaxed text-pretty text-soft md:col-span-4">{study.challenge.intro}</p>
+        <ol class="md:col-span-7 md:col-start-6">
+          {study.challenge.steps.map((s, i) => (
+            <li class="reveal relative grid grid-cols-[auto_1fr] gap-x-5 pb-10 last:pb-0">
+              <span class="relative z-10 grid size-9 place-items-center rounded-full border border-rule bg-paper font-mono text-xs">
+                {i + 1}
+              </span>
+              {i < study.challenge.steps.length - 1 && (
+                <span class="absolute top-9 bottom-0 left-[1.125rem] w-px bg-rule" aria-hidden="true" />
+              )}
+              <div class="flex flex-col gap-2 pt-1.5">
+                {repoBase ? (
+                  <a href={repoBase + s.commit} target="_blank" rel="noopener" class="label ink-link w-fit text-signal">
+                    commit {s.commit} ↗
+                  </a>
+                ) : (
+                  <span class="label text-signal">commit {s.commit}</span>
+                )}
+                <p class="text-pretty">{s.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <blockquote class="reveal mt-20 border-t border-rule pt-8 md:grid md:grid-cols-12">
+        <p class="label text-signal md:col-span-3">Cosa mi porto via</p>
+        <p class="mt-4 font-serif text-2xl leading-snug text-pretty sm:text-3xl md:col-span-9 md:mt-0">
+          <em class="serif-soft">{study.challenge.lesson}</em>
+        </p>
+      </blockquote>
+    </Section>
+  </div>
+
+  <Section id="dopo" side="06" label="Il prossimo giro" title="Cosa farei <em class='serif-soft text-signal'>diversamente</em>.">
+    <ul class="border-t border-rule">
+      {study.next.map((n) => (
+        <li class="reveal grid gap-3 border-b border-rule py-6 md:grid-cols-12">
+          <span class="label text-signal md:col-span-1" aria-hidden="true">→</span>
+          <p class="text-lg text-pretty md:col-span-9">{n}</p>
+        </li>
+      ))}
+    </ul>
+
+    <div class="reveal mt-20 flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+      <p class="font-serif text-3xl sm:text-4xl">Ti va di parlarne?</p>
+      <a href="/#contatti" class="group inline-flex items-center gap-3 rounded-full bg-ink py-3 pr-3 pl-6 text-paper transition-colors hover:bg-signal">
+        Scrivimi
+        <span class="grid size-8 place-items-center rounded-full bg-paper text-ink transition-transform group-hover:-rotate-45">→</span>
+      </a>
+    </div>
+  </Section>
+</Layout>

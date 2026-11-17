@@ -102,6 +102,7 @@ export const languages = [
 
 export const projects = [
   {
+    slug: "sonora",
     title: "Sonora",
     description: "E-commerce di strumenti musicali",
     stack: ["React", "Node.js", "TypeScript"],

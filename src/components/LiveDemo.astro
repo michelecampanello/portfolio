@@ -1,0 +1,109 @@
+---
+// Il sito vero dentro una finta finestra del browser.
+// L'iframe viene caricato solo dopo il clic, a larghezza desktop, e rimpicciolito per entrare nel riquadro.
+// Sotto i 768px lascia il posto a un link: su un telefono il riquadro sarebbe troppo piccolo per usarlo.
+interface Props {
+  url: string;
+  title: string;
+  /** Larghezza "finta" della finestra in cui gira il sito, in pixel. */
+  viewport?: number;
+}
+const { url, title, viewport = 1440 } = Astro.props;
+const host = new URL(url).host;
+---
+
+<div class="reveal">
+  <!-- Desktop e tablet: finestra del browser -->
+  <figure class="hidden overflow-hidden rounded-xl border border-rule bg-paper-2 shadow-[0_30px_60px_-30px_rgb(0_0_0/0.35)] md:block">
+    <div class="flex items-center gap-4 border-b border-rule px-4 py-3">
+      <div class="flex gap-1.5" aria-hidden="true">
+        <span class="size-3 rounded-full bg-rule"></span>
+        <span class="size-3 rounded-full bg-rule"></span>
+        <span class="size-3 rounded-full bg-rule"></span>
+      </div>
+      <p class="flex-1 truncate rounded-full border border-rule bg-paper px-4 py-1 text-center font-mono text-xs text-soft">
+        {host}
+      </p>
+      <a href={url} target="_blank" rel="noopener" class="label ink-link py-1 whitespace-nowrap">Nuova scheda ↗</a>
+    </div>
+
+    <div
+      data-live-demo
+      data-src={url}
+      data-title={title}
+      data-viewport={viewport}
+      class="relative aspect-[16/10] w-full overflow-hidden bg-paper"
+    >
+      <!-- Copertina finché la demo non parte -->
+      <div data-poster class="absolute inset-0 flex flex-col items-center justify-center gap-6 p-8 text-center">
+        <p class="font-serif text-7xl font-medium tracking-tight lg:text-8xl">
+          {title}<span class="text-signal">.</span>
+        </p>
+        <button
+          type="button"
+          data-start
+          class="group inline-flex items-center gap-3 rounded-full bg-ink py-3 pr-3 pl-6 text-paper transition-colors hover:bg-signal"
+        >
+          Avvia la demo dal vivo
+          <span class="grid size-8 place-items-center rounded-full bg-paper text-ink transition-transform group-hover:translate-x-0.5">▶</span>
+        </button>
+        <p class="label max-w-sm text-soft">Carica il sito vero, qui dentro. Puoi navigare, cercare e riempire il carrello.</p>
+        <noscript>
+          <a href={url} target="_blank" rel="noopener" class="label ink-link">Apri {host} ↗</a>
+        </noscript>
+      </div>
+      <p data-loading hidden class="label absolute inset-0 grid place-items-center text-soft">Carico {host}…</p>
+    </div>
+  </figure>
+
+  <!-- Telefono: solo il link -->
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener"
+    class="group flex items-center justify-between gap-6 rounded-xl border border-rule bg-paper-2 p-6 md:hidden"
+  >
+    <span class="flex flex-col gap-1">
+      <span class="font-serif text-3xl font-medium">{title}<span class="text-signal">.</span></span>
+      <span class="font-mono text-xs text-soft">{host}</span>
+    </span>
+    <span class="grid size-11 shrink-0 place-items-center rounded-full bg-ink text-paper transition-colors group-hover:bg-signal">↗</span>
+  </a>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-live-demo]").forEach((box) => {
+    const start = box.querySelector<HTMLButtonElement>("[data-start]")!;
+    const poster = box.querySelector<HTMLElement>("[data-poster]")!;
+    const loading = box.querySelector<HTMLElement>("[data-loading]")!;
+    const viewport = Number(box.dataset.viewport);
+
+    start.addEventListener("click", () => {
+      const frame = document.createElement("iframe");
+      frame.src = box.dataset.src!;
+      frame.title = `${box.dataset.title}, versione dal vivo`;
+      frame.referrerPolicy = "strict-origin-when-cross-origin";
+      frame.className = "absolute top-0 left-0 origin-top-left border-0 opacity-0 transition-opacity duration-500";
+
+      // Il sito gira a larghezza desktop; il riquadro lo rimpicciolisce mantenendo le proporzioni.
+      const fit = () => {
+        const scale = box.clientWidth / viewport;
+        frame.style.width = `${viewport}px`;
+        frame.style.height = `${box.clientHeight / scale}px`;
+        frame.style.transform = `scale(${scale})`;
+      };
+      fit();
+      new ResizeObserver(fit).observe(box);
+
+      frame.addEventListener("load", () => {
+        frame.classList.remove("opacity-0");
+        loading.hidden = true;
+      }, { once: true });
+
+      poster.remove();
+      loading.hidden = false;
+      box.append(frame);
+      frame.focus({ preventScroll: true });
+    });
+  });
+</script>
