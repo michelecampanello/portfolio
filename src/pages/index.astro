@@ -6,9 +6,35 @@ import Skills from "../components/Skills.astro";
 import Projects from "../components/Projects.astro";
 import Education from "../components/Education.astro";
 import Contact from "../components/Contact.astro";
+import { profile, skills, languages } from "../data/cv";
+
+const home = new URL("/", Astro.site).href;
+const jsonLd = [
+  {
+    "@type": "Person",
+    "@id": `${home}#me`,
+    name: profile.name,
+    givenName: profile.firstName,
+    familyName: profile.lastName,
+    jobTitle: profile.role,
+    url: home,
+    image: new URL("/og/index.png", Astro.site).href,
+    address: { "@type": "PostalAddress", addressLocality: profile.city, addressRegion: "Puglia", addressCountry: "IT" },
+    sameAs: [profile.github, profile.linkedin].filter(Boolean),
+    knowsAbout: skills.filter((s) => s.area !== "Extra").flatMap((s) => s.items),
+    knowsLanguage: languages.map((l) => l.name),
+  },
+  {
+    "@type": "WebSite",
+    name: profile.name,
+    url: home,
+    inLanguage: "it-IT",
+    author: { "@id": `${home}#me` },
+  },
+];
 ---
 
-<Layout>
+<Layout jsonLd={jsonLd}>
   <Hero />
   <About />
   <Skills />

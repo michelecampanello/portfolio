@@ -4,6 +4,8 @@
 export interface CaseStudy {
   slug: string;
   kicker: string;
+  /** Data di pubblicazione (AAAA-MM-GG), per i dati strutturati. */
+  published: string;
   tagline: string;
   role: string;
   context: string;
@@ -24,6 +26,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "sonora",
     kicker: "Case study · E-commerce",
+    published: "2026-11-17",
     tagline:
       "Un negozio di strumenti musicali completo: catalogo, carrello, checkout, area personale e pannello admin. Costruito da zero, dal database al deploy.",
     role: "Progetto personale · da solo",

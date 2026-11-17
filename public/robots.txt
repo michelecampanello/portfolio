@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.michelecampanello.dev/sitemap-index.xml

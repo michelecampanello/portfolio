@@ -14,11 +14,47 @@ export function getStaticPaths() {
 
 const { study, project } = Astro.props;
 const repoBase = project.repo ? `${project.repo}/commit/` : "";
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+const home = new URL("/", Astro.site).href;
+const title = `${project.title}: ${project.description.toLowerCase()} in ${project.stack.slice(0, 2).join(" e ")} — case study`;
+const jsonLd = [
+  {
+    "@type": "Article",
+    headline: `${project.title}, case study`,
+    description: study.tagline,
+    url: pageUrl,
+    image: new URL(`/og/${study.slug}.png`, Astro.site).href,
+    datePublished: study.published,
+    inLanguage: "it-IT",
+    author: { "@type": "Person", name: profile.name, url: home },
+    about: {
+      "@type": "SoftwareApplication",
+      name: project.title,
+      description: project.description,
+      applicationCategory: "WebApplication",
+      ...(project.url && { url: project.url }),
+      ...(project.repo && { codeRepository: project.repo }),
+    },
+  },
+  {
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: profile.name, item: home },
+      { "@type": "ListItem", position: 2, name: "Progetti", item: `${home}#progetti` },
+      { "@type": "ListItem", position: 3, name: project.title, item: pageUrl },
+    ],
+  },
+];
 ---
 
 <Layout
-  title={`${project.title} — case study di ${profile.name}`}
+  title={title}
   description={study.tagline}
+  image={`/og/${study.slug}.png`}
+  imageAlt={`${project.title}, ${project.description.toLowerCase()}: case study di ${profile.name}`}
+  type="article"
+  jsonLd={jsonLd}
 >
   <!-- Copertina -->
   <section id="top" class="mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-8 sm:pt-40 sm:pb-24">
