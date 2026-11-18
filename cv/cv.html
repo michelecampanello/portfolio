@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <title>Michele Campanello — Full Stack Developer Junior — CV</title>
+    <style>
+      /* Stessi font e stessi colori del sito (src/styles/global.css) */
+      @font-face {
+        font-family: "Fraunces";
+        src: url("../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-full-normal.woff2")
+          format("woff2");
+        font-weight: 100 900;
+      }
+      @font-face {
+        font-family: "Fraunces";
+        font-style: italic;
+        src: url("../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-full-italic.woff2")
+          format("woff2");
+        font-weight: 100 900;
+      }
+      @font-face {
+        font-family: "Instrument Sans";
+        src: url("../node_modules/@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2")
+          format("woff2");
+        font-weight: 400 700;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        src: url("../node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2")
+          format("woff2");
+        font-weight: 100 800;
+      }
+
+      :root {
+        --paper: #f1ece2;
+        --paper-2: #e8e1d3;
+        --ink: #161412;
+        --soft: #5e5850;
+        --rule: #cfc6b5;
+        --signal: #e8461e;
+      }
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        background: var(--paper);
+        color: var(--ink);
+      }
+      body {
+        font-family: "Instrument Sans", system-ui, sans-serif;
+        font-size: 8.7pt;
+        line-height: 1.42;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .page {
+        position: relative;
+        width: 210mm;
+        height: 297mm;
+        padding: 10mm 14mm 7mm;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      b {
+        font-weight: 600;
+      }
+      .serif {
+        font-family: "Fraunces", serif;
+        font-variation-settings:
+          "SOFT" 50,
+          "WONK" 1;
+      }
+      .serif-soft {
+        font-family: "Fraunces", serif;
+        font-style: italic;
+        font-variation-settings:
+          "SOFT" 100,
+          "WONK" 1;
+      }
+      .signal {
+        color: var(--signal);
+      }
+      .soft {
+        color: var(--soft);
+      }
+      .label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 6.8pt;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      code {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 7.4pt;
+      }
+
+      /* Header: come la hero del sito */
+      header {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        gap: 8mm;
+      }
+      .kicker {
+        display: flex;
+        gap: 2.5mm;
+      }
+      h1 {
+        margin-top: 2.5mm;
+        font-weight: 500;
+        font-size: 31pt;
+        line-height: 0.88;
+        letter-spacing: -0.035em;
+      }
+      h1 .last {
+        display: block;
+        padding-left: 14mm;
+      }
+      h1 .dot {
+        font-style: normal;
+        color: var(--signal);
+      }
+      .role {
+        margin-top: 3mm;
+        font-size: 12.5pt;
+        line-height: 1.25;
+      }
+      .pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5mm;
+        margin-top: 2.6mm;
+      }
+      .pill {
+        padding: 0.8mm 2.6mm;
+        border: 0.7pt solid var(--ink);
+        border-radius: 10mm;
+      }
+      .pill.solid {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      .pill.solid::before {
+        content: "●";
+        color: var(--signal);
+        margin-right: 1.2mm;
+      }
+
+      /* Foto a polaroid con nastro, come in "Chi sono" */
+      .polaroid {
+        position: relative;
+        width: 33mm;
+        padding: 2mm 2mm 6.5mm;
+        background: var(--paper-2);
+        border: 0.6pt solid var(--rule);
+        transform: rotate(-2deg);
+        box-shadow: 0 3mm 5mm -3.5mm rgb(0 0 0 / 0.45);
+        margin: 0 2mm 1mm 0;
+      }
+      .polaroid::before {
+        content: "";
+        position: absolute;
+        top: -2mm;
+        left: 50%;
+        width: 15mm;
+        height: 4mm;
+        transform: translateX(-50%) rotate(3deg);
+        background: rgb(232 70 30 / 0.8);
+      }
+      .polaroid img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        filter: grayscale(35%) sepia(15%);
+      }
+      .polaroid figcaption {
+        position: absolute;
+        left: 2mm;
+        right: 2mm;
+        bottom: 1.8mm;
+        display: flex;
+        justify-content: space-between;
+        font-size: 6pt;
+        color: var(--soft);
+      }
+
+      /* Nastro con lo stack */
+      .ribbon {
+        display: flex;
+        justify-content: center;
+        flex: none;
+        margin: 4.5mm -14mm 0;
+        padding: 1.4mm 0;
+        transform: rotate(-0.8deg);
+        background: var(--signal);
+        color: #161412;
+        border-top: 0.8pt solid #161412;
+        border-bottom: 0.8pt solid #161412;
+        white-space: nowrap;
+        font-size: 11.5pt;
+        line-height: 1.2;
+      }
+      .ribbon i {
+        font-style: normal;
+        padding: 0 2.6mm;
+      }
+
+      .contacts {
+        display: flex;
+        justify-content: space-between;
+        gap: 3mm;
+        margin-top: 4mm;
+        padding-bottom: 2.2mm;
+        border-bottom: 0.6pt solid var(--rule);
+        font-size: 7.9pt;
+        white-space: nowrap;
+      }
+      .contacts .label {
+        display: block;
+        margin-bottom: 0.3mm;
+        color: var(--soft);
+      }
+
+      /* Corpo */
+      .cols {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 66mm;
+        gap: 8mm;
+        padding-top: 3.4mm;
+      }
+      section + section {
+        margin-top: 3.4mm;
+      }
+      /* Intestazione di sezione "lato del disco": codice traccia + titolo */
+      h2 {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 3mm;
+        padding-top: 1.6mm;
+        margin-bottom: 2.4mm;
+        border-top: 1pt solid var(--ink);
+        font-family: "Fraunces", serif;
+        font-variation-settings:
+          "SOFT" 50,
+          "WONK" 1;
+        font-weight: 500;
+        font-size: 13pt;
+        letter-spacing: -0.01em;
+        line-height: 1.1;
+      }
+      h2 em {
+        font-style: italic;
+        color: var(--signal);
+        font-variation-settings:
+          "SOFT" 100,
+          "WONK" 1;
+      }
+      h2 .label {
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 400;
+        letter-spacing: 0.08em;
+      }
+      p + p {
+        margin-top: 1.5mm;
+      }
+
+      /* Progetto */
+      .proj-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+      .proj-head h3 {
+        font-size: 15pt;
+        font-weight: 500;
+        line-height: 1.1;
+      }
+      .proj-sub {
+        margin: 0.4mm 0 2.4mm;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.6pt;
+        background: var(--rule);
+        border: 0.6pt solid var(--rule);
+        margin-bottom: 2.6mm;
+      }
+      .stat {
+        background: var(--paper-2);
+        padding: 1.6mm 2.2mm;
+      }
+      .stat.negative {
+        background: #141210;
+        color: #ede6d8;
+      }
+      .stat.negative span {
+        color: #a39b8d;
+      }
+      .stat b {
+        display: block;
+        font-size: 14pt;
+        font-weight: 500;
+        line-height: 1.1;
+      }
+      .stat.negative b {
+        color: #ff6a3d;
+      }
+      .stat span {
+        display: block;
+        font-size: 6.9pt;
+        line-height: 1.25;
+        color: var(--soft);
+      }
+      ul {
+        list-style: none;
+      }
+      ul.points li,
+      ul.strengths li {
+        position: relative;
+        padding-left: 4mm;
+      }
+      ul.points li + li {
+        margin-top: 1mm;
+      }
+      ul.points li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.62em;
+        width: 2mm;
+        height: 0.9pt;
+        background: var(--signal);
+      }
+      .links {
+        display: flex;
+        gap: 5mm;
+        margin-top: 2.2mm;
+      }
+      .links a {
+        border-bottom: 0.8pt solid var(--ink);
+      }
+      ul.strengths li + li {
+        margin-top: 1.1mm;
+      }
+      ul.strengths li::before {
+        content: "✳";
+        position: absolute;
+        left: 0;
+        color: var(--signal);
+      }
+
+      /* Sidebar */
+      .skill + .skill {
+        margin-top: 1.7mm;
+      }
+      .skill > .label {
+        color: var(--soft);
+        margin-bottom: 0.7mm;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1mm;
+      }
+      .chip {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 6.9pt;
+        padding: 0.3mm 1.9mm;
+        border-radius: 10mm;
+        border: 0.6pt solid var(--rule);
+      }
+      .chip.core {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      /* Tracklist della formazione */
+      .track {
+        display: grid;
+        grid-template-columns: 5.5mm 1fr auto;
+        gap: 0 1.2mm;
+        padding: 1.2mm 0;
+        border-bottom: 0.6pt solid var(--rule);
+      }
+      .track:last-child {
+        border-bottom: 0;
+      }
+      .track .n {
+        font-size: 10pt;
+        line-height: 1.2;
+        color: var(--signal);
+      }
+      .track h4 {
+        font-family: "Fraunces", serif;
+        font-variation-settings:
+          "SOFT" 50,
+          "WONK" 1;
+        font-weight: 500;
+        font-size: 9.6pt;
+        line-height: 1.2;
+      }
+      .track .org {
+        color: var(--soft);
+        font-size: 7.7pt;
+        line-height: 1.3;
+      }
+      .track .yr {
+        color: var(--soft);
+        padding-top: 0.6mm;
+      }
+
+      .langs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.6pt;
+        background: var(--rule);
+        border: 0.6pt solid var(--rule);
+      }
+      .lang {
+        background: var(--paper-2);
+        padding: 1.6mm 2.2mm;
+      }
+      .lang .name {
+        font-size: 11pt;
+        font-weight: 500;
+        line-height: 1.15;
+      }
+      .lang .lvl {
+        font-size: 11pt;
+        line-height: 1.15;
+      }
+
+      footer {
+        margin-top: 3mm;
+        padding-top: 2.2mm;
+        border-top: 0.6pt solid var(--rule);
+        display: flex;
+        justify-content: space-between;
+        gap: 6mm;
+        font-size: 6.6pt;
+        color: var(--soft);
+      }
+      footer .label {
+        font-size: 6.2pt;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <div>
+          <p class="label kicker">
+            <span class="signal">Lato A</span><span class="soft">Curriculum Vitae</span>
+          </p>
+          <h1 class="serif">
+            Michele
+            <span class="last serif-soft">Campanello<span class="dot">.</span></span>
+          </h1>
+          <p class="role serif">
+            <span class="serif-soft signal">Full Stack Developer Junior</span> a
+            Bari.
+          </p>
+          <div class="pills label">
+            <span class="pill solid">Disponibile da subito</span>
+            <span class="pill">Iscritto alle categorie protette (L. 68/99)</span>
+          </div>
+        </div>
+        <figure class="polaroid">
+          <img src="../src/assets/michele.png" alt="Michele Campanello" />
+          <figcaption class="label"><span>Fig. 01</span><span>Bari</span></figcaption>
+        </figure>
+      </header>
+
+      <div class="ribbon" aria-label="Tecnologie che uso"><span class="serif-soft">
+        React<i>✳</i>Next.js<i>✳</i>TypeScript<i>✳</i>Node.js<i>✳</i>Spring
+        Boot<i>✳</i>PostgreSQL<i>✳</i>Flutter<i>✳</i>Go<i>✳</i>MongoDB</span>
+      </div>
+
+      <div class="contacts">
+        <div>
+          <span class="label">Email</span
+          ><a href="mailto:campanellomichele@outlook.it"
+            >campanellomichele@outlook.it</a
+          >
+        </div>
+        <div><span class="label">Città</span>Bari, Puglia</div>
+        <div>
+          <span class="label">Portfolio</span
+          ><a href="https://www.michelecampanello.dev">michelecampanello.dev</a>
+        </div>
+        <div>
+          <span class="label">LinkedIn</span
+          ><a href="https://www.linkedin.com/in/michele-campanello-82365325a/"
+            >in/michele-campanello</a
+          >
+        </div>
+        <div>
+          <span class="label">GitHub</span
+          ><a href="https://github.com/michelecampanello"
+            >github.com/michelecampanello</a
+          >
+        </div>
+      </div>
+
+      <div class="cols">
+        <main>
+          <section>
+            <h2>
+              <span>Chi <em>sono</em>.</span
+              ><span class="label"><span class="signal">A1</span> Profilo</span>
+            </h2>
+            <p>
+              Full Stack Developer junior formato con il bootcamp
+              <b>Aulab</b>, con un <b>e-commerce completo online</b> progettato
+              e sviluppato da solo, dal database al deploy:
+              <b>PostgreSQL, API Node.js/TypeScript, frontend React, CI/CD su
+                Vercel</b>.
+            </p>
+            <p>
+              Scrivo codice pensando a chi lo leggerà dopo di me: test
+              automatici, architettura a livelli e attenzione alla sicurezza.
+              Vengo da un diploma tecnico sanitario e dal 2022 investo con
+              continuità nella formazione tecnica (dati, AI, PEKIT Expert).
+              Cerco un team in cui portare affidabilità sulle consegne e
+              crescere come sviluppatore.
+            </p>
+          </section>
+
+          <section>
+            <h2>
+              <span>Cose che ho <em>costruito</em>.</span
+              ><span class="label"><span class="signal">A2</span> Progetto</span>
+            </h2>
+            <div class="proj-head">
+              <h3 class="serif">Sonora</h3>
+              <span class="label soft">2026 · progetto personale</span>
+            </div>
+            <p class="proj-sub soft">
+              E-commerce di strumenti musicali, full stack: catalogo, carrello,
+              checkout, area personale e pannello di amministrazione.
+            </p>
+            <div class="stats">
+              <div class="stat">
+                <b class="serif">250+</b><span>test automatici</span>
+              </div>
+              <div class="stat">
+                <b class="serif">30+</b><span>endpoint API REST</span>
+              </div>
+              <div class="stat">
+                <b class="serif">CI/CD</b><span>GitHub Actions → Vercel</span>
+              </div>
+              <div class="stat negative">
+                <b class="serif-soft">Solo</b
+                ><span>dal DB al deploy, in autonomia</span>
+              </div>
+            </div>
+            <ul class="points">
+              <li>
+                <b>Backend a livelli</b> (routes → controllers → services) in
+                Node.js, Express e TypeScript strict, su PostgreSQL con ricerca
+                tollerante ai refusi (<code>pg_trgm</code>).
+              </li>
+              <li>
+                <b>Ordini affidabili sotto concorrenza</b>: transazioni con
+                <code>SELECT … FOR UPDATE</code>, verificate da un test che
+                simula due acquisti simultanei dell'ultimo pezzo disponibile.
+              </li>
+              <li>
+                <b>Sicurezza by design</b>: totali calcolati lato server in
+                centesimi interi, JWT in cookie httpOnly, reset password con
+                token monouso (hash SHA-256).
+              </li>
+              <li>
+                <b>Frontend moderno</b> in React 19, Vite, Tailwind CSS e
+                shadcn/ui; integrazione con Cloudinary (media), Resend (email) e
+                Neon (Postgres serverless).
+              </li>
+            </ul>
+            <div class="links label">
+              <a href="https://sonora.michelecampanello.dev"
+                >sonora.michelecampanello.dev ↗</a
+              >
+              <a href="https://github.com/michelecampanello/sonora"
+                >Codice su GitHub ↗</a
+              >
+            </div>
+          </section>
+
+          <section>
+            <h2>
+              <span>Come <em>lavoro</em>.</span
+              ><span class="label"><span class="signal">A3</span> Punti di forza</span>
+            </h2>
+            <ul class="strengths">
+              <li>
+                <b>Affidabilità</b>: consegno quando ho detto che avrei
+                consegnato.
+              </li>
+              <li>
+                <b>Metodo</b>: capisco il perché di un problema prima di
+                scrivere codice e curo i dettagli.
+              </li>
+              <li>
+                <b>Collaborazione</b>: autonomo quando serve concentrazione,
+                propositivo in team quando serve fare le domande giuste.
+              </li>
+            </ul>
+          </section>
+        </main>
+
+        <aside>
+          <section>
+            <h2>
+              <span>Gli <em>attrezzi</em>.</span
+              ><span class="label"><span class="signal">B1</span> Stack</span>
+            </h2>
+            <div class="skill">
+              <div class="label">Frontend</div>
+              <div class="chips">
+                <span class="chip core">React</span
+                ><span class="chip core">TypeScript</span
+                ><span class="chip">Next.js</span
+                ><span class="chip">JavaScript</span
+                ><span class="chip">HTML</span><span class="chip">CSS</span
+                ><span class="chip">Tailwind CSS</span>
+              </div>
+            </div>
+            <div class="skill">
+              <div class="label">Backend</div>
+              <div class="chips">
+                <span class="chip core">Node.js</span
+                ><span class="chip">Express</span
+                ><span class="chip">Java</span
+                ><span class="chip">Spring Boot</span
+                ><span class="chip">Go</span
+                ><span class="chip">REST API</span>
+              </div>
+            </div>
+            <div class="skill">
+              <div class="label">Database</div>
+              <div class="chips">
+                <span class="chip core">PostgreSQL</span
+                ><span class="chip">SQL</span
+                ><span class="chip">MongoDB</span>
+              </div>
+            </div>
+            <div class="skill">
+              <div class="label">Mobile</div>
+              <div class="chips">
+                <span class="chip">Flutter</span><span class="chip">Dart</span>
+              </div>
+            </div>
+            <div class="skill">
+              <div class="label">DevOps &amp; strumenti</div>
+              <div class="chips">
+                <span class="chip">Git</span
+                ><span class="chip">GitHub Actions</span
+                ><span class="chip">Vercel</span
+                ><span class="chip">Test automatici</span>
+              </div>
+            </div>
+            <div class="skill">
+              <div class="label">Altro</div>
+              <div class="chips">
+                <span class="chip">Prompt design</span
+                ><span class="chip">Data analysis</span
+                ><span class="chip">Office (PEKIT Expert)</span>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2>
+              <span>La <em>tracklist</em>.</span
+              ><span class="label"><span class="signal">B2</span> Formazione</span>
+            </h2>
+            <div class="track">
+              <span class="n serif-soft">01</span>
+              <div>
+                <h4>PEKIT Expert</h4>
+                <div class="org">Certificazione delle competenze informatiche</div>
+              </div>
+              <span class="yr label">2025</span>
+            </div>
+            <div class="track">
+              <span class="n serif-soft">02</span>
+              <div>
+                <h4>Data Analysis — Data Week</h4>
+                <div class="org">Boolean, Bari</div>
+              </div>
+              <span class="yr label">2024</span>
+            </div>
+            <div class="track">
+              <span class="n serif-soft">03</span>
+              <div>
+                <h4>Conversation &amp; Prompt Design</h4>
+                <div class="org">Aulab, Bari · conversazioni e prompt per l'AI</div>
+              </div>
+              <span class="yr label">2024</span>
+            </div>
+            <div class="track">
+              <span class="n serif-soft">04</span>
+              <div>
+                <h4>Full Stack Developer</h4>
+                <div class="org">Aulab · bootcamp intensivo</div>
+              </div>
+              <span class="yr label">2022–23</span>
+            </div>
+            <div class="track">
+              <span class="n serif-soft">05</span>
+              <div>
+                <h4>Diploma tecnico sanitario</h4>
+                <div class="org">IISS Elena di Savoia, Bari</div>
+              </div>
+              <span class="yr label">2017–21</span>
+            </div>
+          </section>
+
+          <section>
+            <h2>
+              <span><em>Lingue</em>.</span
+              ><span class="label"><span class="signal">B3</span> Parlato</span>
+            </h2>
+            <div class="langs">
+              <div class="lang">
+                <div class="name serif">Italiano</div>
+                <div class="lvl serif-soft signal">Madrelingua</div>
+              </div>
+              <div class="lang">
+                <div class="name serif">Inglese</div>
+                <div class="lvl serif-soft signal">C1</div>
+              </div>
+            </div>
+            <p class="soft" style="margin-top: 1.4mm; font-size: 8pt">
+              Documentazione tecnica, scritto e parlato in autonomia. Fuori
+              orario: musica, cinema, tecnologia.
+            </p>
+          </section>
+        </aside>
+      </div>
+
+      <footer>
+        <span
+          >Autorizzo il trattamento dei dati personali contenuti nel mio
+          curriculum vitae ai sensi del Regolamento UE 2016/679 (GDPR) e del
+          D.Lgs. 196/2003.</span
+        >
+        <span class="label"><span class="signal">Fine lato B</span> · michelecampanello.dev</span>
+      </footer>
+    </div>
+  </body>
+</html>

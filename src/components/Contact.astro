@@ -5,7 +5,8 @@ const links = [
   profile.phone && { href: `tel:${profile.phone.replace(/\s/g, '')}`, label: profile.phone },
   profile.github && { href: profile.github, label: 'GitHub ↗', external: true },
   profile.linkedin && { href: profile.linkedin, label: 'LinkedIn ↗', external: true },
-].filter(Boolean) as { href: string; label: string; external?: boolean }[];
+  profile.cvPdf && { href: profile.cvPdf, label: 'Scarica CV ↓', download: true },
+].filter(Boolean) as { href: string; label: string; external?: boolean; download?: boolean }[];
 ---
 
 <section id="contatti" class="bg-ink text-paper">
@@ -35,7 +36,7 @@ const links = [
             Copia indirizzo
           </button>
           {links.map((l) => (
-            <a href={l.href} class="label ink-link" target={l.external ? '_blank' : undefined} rel={l.external ? 'noopener' : undefined}>{l.label}</a>
+            <a href={l.href} class="label ink-link" target={l.external ? '_blank' : undefined} rel={l.external ? 'noopener' : undefined} download={l.download || undefined}>{l.label}</a>
           ))}
         </div>
       </div>

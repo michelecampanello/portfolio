@@ -12,6 +12,8 @@ export const profile = {
   // Aggiungi i tuoi profili (es. 'https://github.com/...'): i link vuoti non vengono mostrati.
   github: "https://github.com/michelecampanello",
   linkedin: "https://www.linkedin.com/in/michele-campanello-82365325a/",
+  // PDF in public/: rigeneralo da cv/cv.html quando aggiorni i contenuti. Vuoto per nasconderlo.
+  cvPdf: "/cv.pdf",
   status: "Disponibile · cerco un team con cui crescere",
   intro:
     "Interfacce in React e Next.js, API in Node.js e Spring Boot, app in Flutter.",
